@@ -7,6 +7,7 @@ import androidx.paging.rxjava3.RxPagingSource
 import com.example.mediasoft_test.model.data.CharacterDT
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class CharacterPagingSource: RxPagingSource<Int, Character>() {
     override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
@@ -16,7 +17,7 @@ class CharacterPagingSource: RxPagingSource<Int, Character>() {
     }
 
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, Character>> {
-        val position = params.key ?: 0
+        val position = params.key ?: 1
         Log.d("aboba", "loadsingle")
         return Api.retrofitService.getCharactersList(position)
             .subscribeOn(Schedulers.io())
@@ -28,14 +29,14 @@ class CharacterPagingSource: RxPagingSource<Int, Character>() {
 
 
 
-    private fun mapper(chars: CharacterResponse, page: Int): PagingSource.LoadResult<Int, Character> {
-        val list: List<Character> = chars.data.results.map { it.toCharacter() }
+    private fun mapper(chars: CharacterDT, page: Int): LoadResult<Int, Character> {
+        val list: List<Character> = chars.results.map { it.toCharacter() }
         Log.d("aboba", "mapaem ${list.size}")
         return PagingSource.LoadResult.Page(
             //data = chars.list.data.results.map { it.toCharacter() },
-            data = chars.data.results.map{it.toCharacter()},
+            data = chars.results.map{it.toCharacter()},
             prevKey = if (page == 1) null else page - 1,
-            nextKey = if (page == chars.total) null else page + 1
+            nextKey = if (page == chars.info.pages) null else page + 1
         )
     }
 }

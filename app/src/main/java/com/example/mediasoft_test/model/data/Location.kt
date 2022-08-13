@@ -1,6 +1,6 @@
 package com.example.mediasoft_test.model.data
 
-data class Url(
-    val type: String,
+data class Location(
+    val name: String,
     val url: String
 )

@@ -3,27 +3,28 @@ package com.example.mediasoft_test.model.data
 import com.example.mediasoft_test.model.Character
 
 data class Result(
-    val comics: Comics,
-    val description: String,
-    val events: Events,
+    val created: String,
+    val episode: List<String>,
+    val gender: String,
     val id: Int,
-    val modified: String,
+    val image: String,
+    val location: Location,
     val name: String,
-    val resourceURI: String,
-    val series: Series,
-    val stories: Stories,
-    val thumbnail: Thumbnail,
-    val urls: List<Url>
+    val origin: Origin,
+    val species: String,
+    val status: String,
+    val type: String,
+    val url: String
 ) {
     fun toCharacter(): Character {
         return Character(
             id = id,
-            description = description,
             name = name,
-            thumbnail = thumbnail.path,
-            thumbnailExt = thumbnail.extension,
-            modified = modified.substringBefore('T'),
-            img = "${thumbnail.path}/portrait_xlarge.${thumbnail.extension}"
+            species = species,
+            gender = gender,
+            status = status,
+            type = type,
+            img = image
         )
     }
 }

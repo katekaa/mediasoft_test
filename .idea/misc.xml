@@ -5,9 +5,11 @@
       <map>
         <entry key="..\:/Android/mediasoft_test/app/src/main/res/drawable-v24/error.xml" value="0.20885416666666667" />
         <entry key="..\:/Android/mediasoft_test/app/src/main/res/drawable-v24/loading_img.xml" value="0.20885416666666667" />
+        <entry key="..\:/Android/mediasoft_test/app/src/main/res/drawable/no_connection.xml" value="0.1796875" />
         <entry key="..\:/Android/mediasoft_test/app/src/main/res/layout/activity_main.xml" value="0.20634920634920634" />
         <entry key="..\:/Android/mediasoft_test/app/src/main/res/layout/list_fragment.xml" value="0.30052083333333335" />
-        <entry key="..\:/Android/mediasoft_test/app/src/main/res/layout/list_item.xml" value="0.30052083333333335" />
+        <entry key="..\:/Android/mediasoft_test/app/src/main/res/layout/list_item.xml" value="0.5" />
+        <entry key="..\:/Android/mediasoft_test/app/src/main/res/layout/load_state_item.xml" value="0.24635416666666668" />
       </map>
     </option>
   </component>

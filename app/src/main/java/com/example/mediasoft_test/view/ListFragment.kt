@@ -5,17 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mediasoft_test.adapter.ListAdapter
 import com.example.mediasoft_test.adapter.ListLoadStateAdapter
 import com.example.mediasoft_test.databinding.ListFragmentBinding
-import com.example.mediasoft_test.model.Character
 import com.example.mediasoft_test.repository.CharacterRepository
 import com.example.mediasoft_test.viewmodel.CharacterViewModel
 import com.example.mediasoft_test.viewmodel.CharacterViewModelFactory
@@ -41,19 +38,36 @@ class ListFragment: Fragment() {
     ): View? {
         binding = ListFragmentBinding.inflate(inflater)
 
-        //viewModel = ViewModelProvider(this)[CharacterListViewModel::class.java]
         recycler = binding.recyclerView
         adapter = ListAdapter()
-        //footerAdapter = ListLoadStateAdapter()
+        footerAdapter = ListLoadStateAdapter()
+        val adapterWithState = adapter.withLoadStateFooter(footerAdapter)
+        val refreshLayout = binding.refreshLayout
+        refreshLayout.setOnRefreshListener {
+            adapter.refresh()
+        }
+
+        adapter.addLoadStateListener {
+
+            when (it.refresh) {
+                is LoadState.NotLoading -> {
+                    refreshLayout.isRefreshing = false
+                }
+                is LoadState.Loading -> {
+                }
+                is LoadState.Error -> {
+                    refreshLayout.isRefreshing = false
+                }
+            }
+        }
 
         recycler.layoutManager = LinearLayoutManager(this.context)
-        //recycler.adapter = adapterWithState
-        recycler.adapter = adapter
+        recycler.adapter = adapterWithState
         disposable.add(viewModel.callApi().subscribe() {
                 adapter.submitData(lifecycle, it)
             Log.d("aboba", "it in fragment ${it}")
             })
-        //val adapterWithState = adapter.withLoadStateFooter(footerAdapter)
+
 
         return binding.root
 

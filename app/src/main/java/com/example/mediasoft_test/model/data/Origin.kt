@@ -1,6 +1,6 @@
 package com.example.mediasoft_test.model.data
 
-data class ItemXX(
+data class Origin(
     val name: String,
-    val resourceURI: String
+    val url: String
 )

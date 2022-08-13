@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private const val BASE_URL= "https://gateway.marvel.com/"
+private const val BASE_URL= "https://rickandmortyapi.com/api/"
 
 private val logging = run {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -28,8 +28,8 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL).client(clientM).build()
 
 interface ApiService {
-    @GET("v1/public/characters?ts=1&apikey=1cadb66a117fd6e06d0e32e09bfb3bed&hash=8ffb610d5c9aafa787f5aaa1bd4c6548")
-    fun getCharactersList(@Query("offset") page: Int): Single<CharacterResponse>
+    @GET("character")
+    fun getCharactersList(@Query("page") page: Int): Single<CharacterDT>
 }
 
 object Api {

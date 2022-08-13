@@ -47,7 +47,8 @@ class CharacterViewModel(private val repo: CharacterRepository): ViewModel() {
     @ExperimentalCoroutinesApi
     fun callApi (): Flowable<PagingData<Character>> {
         Log.d("aboba", "call api from vm ${repo.getCharacters()}")
-        return repo.getCharacters().cachedIn(viewModelScope)
+        return repo.getCharacters().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).cachedIn(viewModelScope)
     }
 
 

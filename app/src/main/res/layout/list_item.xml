@@ -20,11 +20,11 @@
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
             android:cropToPadding="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/name"
             tools:src="@mipmap/ic_launcher_round" />
 
         <TextView
@@ -32,31 +32,70 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="14dp"
+            android:layout_marginTop="6dp"
             android:ellipsize="end"
             android:lines="1"
             android:text="@{character.name}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img"
-            app:layout_constraintTop_toTopOf="@id/img"
-            tools:text="SpiderMan" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Morty" />
 
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/gender"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="4dp"
             android:ellipsize="end"
-            android:maxLines="6"
-            android:text="@{character.description}"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:text="@{character.gender}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/name"
             app:layout_constraintTop_toBottomOf="@id/name"
-            tools:text="Cool boy"
+            tools:text="Male" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:text="@{character.status}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/gender"
+            app:layout_constraintTop_toBottomOf="@id/gender"
+            tools:text="Alive"/>
+
+        <TextView
+            android:id="@+id/species"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:ellipsize="end"
+            android:text="@{character.species}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/status"
+            app:layout_constraintTop_toBottomOf="@id/status"
+            tools:text="Human" />
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:text="@{character.type}"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/species"
+            app:layout_constraintTop_toBottomOf="@id/species"
+            tools:text="Human"
             android:layout_marginRight="12dp" />
 
         <androidx.constraintlayout.widget.Barrier
@@ -65,7 +104,7 @@
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
             app:circularflow_radiusInDP="50dp"
-            app:constraint_referenced_ids="img,description"
+            app:constraint_referenced_ids="img,type"
             tools:layout_editor_absoluteX="402dp"
             tools:layout_editor_absoluteY="76dp" />
 
