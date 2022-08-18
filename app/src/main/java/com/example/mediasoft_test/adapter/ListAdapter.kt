@@ -1,11 +1,10 @@
 package com.example.mediasoft_test.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,35 +13,47 @@ import com.example.mediasoft_test.R
 import com.example.mediasoft_test.databinding.ListItemBinding
 import com.example.mediasoft_test.model.Character
 
-class ListAdapter() :
+
+typealias CharacterAction = (Boolean) -> Unit
+
+class ListAdapter(
+    private val characterAction: CharacterAction
+) :
     PagingDataAdapter<Character, ListAdapter.ListViewHolder>(CharsDiffCallback()) {
 
-    //var characterList = ArrayList<Character>()
+    val selectedCharacters = mutableListOf<Character>()
+    val selectedPositions = mutableListOf<Int>()
+    var selectionMode = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemBinding.inflate(inflater, parent, false)
+
         return ListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val character = getItem(position) ?: return
+        holder.itemView.setOnLongClickListener {
+            onLongClickAction(
+                position,
+                holder.binding,
+                character
+            )
+        }
+        holder.itemView.setOnClickListener { onClickAction(position, holder.binding, character) }
         holder.bind(character)
     }
 
-    //override fun getItemCount() = characterList.size
-
     class ListViewHolder(
-        private val binding: ListItemBinding
+        val binding: ListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-
         private val img: ImageView = itemView.findViewById(R.id.img)
-        //val charName: TextView = itemView.findViewById(R.id.name)
-        //val description: TextView = itemView.findViewById(R.id.description)
 
         fun bind(data: Character) {
-            binding.character = data
+            if (!data.selected) binding.checkBox.isVisible = false
+            binding.characterToBind = data
             loadPhoto(data.img, img)
         }
 
@@ -70,4 +81,40 @@ class ListAdapter() :
 
     }
 
+    private fun onLongClickAction(
+        pos: Int,
+        binding: ListItemBinding,
+        character: Character
+    ): Boolean {
+        if (!selectionMode) {
+            selectionMode = true
+            character.selected = true
+            selectedCharacters.add(character)
+            selectedPositions.add(pos)
+            characterAction(true)
+            binding.checkBox.isVisible = true
+        }
+        return true
+    }
+
+
+    private fun onClickAction(pos: Int, binding: ListItemBinding, character: Character) {
+        if (selectionMode) {
+            if (character.selected) {
+                selectedCharacters.remove(character)
+                selectedPositions.remove(pos)
+                character.selected = false
+                binding.checkBox.isVisible = false
+                if (selectedCharacters.isEmpty()) {
+                    selectionMode = false
+                    characterAction(false)
+                }
+            } else {
+                character.selected = true
+                selectedCharacters.add(character)
+                selectedPositions.add(pos)
+                binding.checkBox.isVisible = true
+            }
+        }
+    }
 }

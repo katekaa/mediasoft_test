@@ -7,8 +7,8 @@ import com.example.mediasoft_test.R
 import com.example.mediasoft_test.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
 
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,9 +18,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().replace(binding.fragmentContainer.id, ListFragment())
+            supportFragmentManager.beginTransaction()
+                .replace(binding.fragmentContainer.id, ListFragment())
                 .commit()
         }
     }
-
 }

@@ -1,6 +1,6 @@
 package com.example.mediasoft_test.model.data
 
-import com.example.mediasoft_test.model.Character
+import com.example.mediasoft_test.model.room.CharacterRoomEntity
 
 data class Result(
     val created: String,
@@ -16,15 +16,16 @@ data class Result(
     val type: String,
     val url: String
 ) {
-    fun toCharacter(): Character {
-        return Character(
-            id = id,
+    fun toCharacterRoomEntity(): CharacterRoomEntity {
+        return CharacterRoomEntity(
+            character_id = id,
             name = name,
             species = species,
             gender = gender,
             status = status,
             type = type,
-            img = image
+            img = image,
+            isSelected = false,
         )
     }
 }
