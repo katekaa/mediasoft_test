@@ -54,10 +54,9 @@ class ListFragment : Fragment() {
 
         binding.deleteButton.setOnClickListener {
             deleteCharacters(adapter.selectedCharacters)
-//            adapter.selectedPositions.forEach{
-//                adapter.notifyItemChanged(it)
-//            }
-            adapter.notifyDataSetChanged()
+            adapter.selectedPositions.forEach{
+                adapter.notifyItemChanged(it)
+            }
             adapter.selectedCharacters.clear()
             adapter.selectionMode = false
             adapter.selectedPositions.clear()
