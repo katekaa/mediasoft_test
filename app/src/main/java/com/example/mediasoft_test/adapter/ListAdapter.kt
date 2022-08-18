@@ -108,6 +108,7 @@ class ListAdapter(
                 if (selectedCharacters.isEmpty()) {
                     selectionMode = false
                     characterAction(false)
+                    selectedCharacters.clear()
                 }
             } else {
                 character.selected = true
